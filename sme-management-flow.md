@@ -7,22 +7,19 @@ flowchart TD
     Assign --> SMEPath[SME Activities]
     Assign --> PartnerPath[Partner Resource Activities]
 
-    %% SME Path
+    %% SME Path (Left Side)
     SMEPath --> SMEForm[SME Fills Out<br/>Weekly Evaluation Form]
     SMEForm --> UpdateTracker[(SME Tracker in Airtable<br/>Automatically Updated)]
-    UpdateTracker --> SMEComplete[Analysis Available]
+    UpdateTracker --> End
 
-    %% Partner Resource Path
+    %% Partner Resource Path (Right Side)
     PartnerPath --> RequestForm[Partner Resource<br/>Submits Request Form]
     RequestForm --> FillDetails[Fill Out:<br/>• Priority<br/>• Request Details]
 
     FillDetails --> Email[Automated Email<br/>Sent to SME]
-    Email --> LogDB[(Log Request<br/>in Database)]
+    Email --> LogDB[(Request Automatically<br/>Logged in Database)]
 
-    LogDB --> PartnerComplete[Analysis Available]
-
-    PartnerComplete --> End([Complete])
-    SMEComplete --> End
+    LogDB --> End([Complete/<br/>Analysis Available])
 
     %% Styling
     style Start fill:#e1f5e1
@@ -34,8 +31,6 @@ flowchart TD
     style UpdateTracker fill:#e1e5f5
     style LogDB fill:#e1e5f5
     style Email fill:#ffe1e1
-    style SMEComplete fill:#d4edda,stroke:#28a745,stroke-width:2px
-    style PartnerComplete fill:#d4edda,stroke:#28a745,stroke-width:2px
     style SMEPath fill:#f0f8ff,stroke:#4682b4,stroke-width:2px
     style PartnerPath fill:#fff8f0,stroke:#ff8c42,stroke-width:2px
 ```
