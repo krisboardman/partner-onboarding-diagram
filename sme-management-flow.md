@@ -8,25 +8,20 @@ flowchart TD
     Assign --> PartnerPath[Partner Resource Activities]
 
     %% SME Path
-    SMEPath --> SMEForm[SME Fills Out Form]
-    SMEForm --> UpdateTracker[(Update SME Tracker<br/>in Airtable)]
-    UpdateTracker --> SMEComplete[Information Updated]
+    SMEPath --> SMEForm[SME Fills Out<br/>Weekly Evaluation Form]
+    SMEForm --> UpdateTracker[(SME Tracker in Airtable<br/>Automatically Updated)]
+    UpdateTracker --> SMEComplete[Analysis Available]
 
     %% Partner Resource Path
     PartnerPath --> RequestForm[Partner Resource<br/>Submits Request Form]
-    RequestForm --> RequestType{Request<br/>Type}
+    RequestForm --> FillDetails[Fill Out:<br/>• Priority<br/>• Request Details]
 
-    RequestType -->|General Request| ProcessRequest[Process Request]
-    RequestType -->|Specific Ask| ProcessRequest
+    FillDetails --> Email[Automated Email<br/>Sent to SME]
+    Email --> LogDB[(Log Request<br/>in Database)]
 
-    ProcessRequest --> Email[Send Email<br/>to SME]
-    ProcessRequest --> LogDB[(Log Request<br/>in Database)]
+    LogDB --> PartnerComplete[Analysis Available]
 
-    Email --> Notify[SME Notified]
-    LogDB --> Track[Request Tracked]
-
-    Notify --> End([Complete])
-    Track --> End
+    PartnerComplete --> End([Complete])
     SMEComplete --> End
 
     %% Styling
@@ -35,41 +30,45 @@ flowchart TD
     style Assign fill:#d4edda,stroke:#28a745,stroke-width:2px
     style SMEForm fill:#fff4e1
     style RequestForm fill:#fff4e1
+    style FillDetails fill:#fff4e1
     style UpdateTracker fill:#e1e5f5
     style LogDB fill:#e1e5f5
     style Email fill:#ffe1e1
-    style RequestType fill:#ffe1f5
+    style SMEComplete fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style PartnerComplete fill:#d4edda,stroke:#28a745,stroke-width:2px
     style SMEPath fill:#f0f8ff,stroke:#4682b4,stroke-width:2px
     style PartnerPath fill:#fff8f0,stroke:#ff8c42,stroke-width:2px
 ```
 
 ## Workflow Overview
 
-This diagram illustrates the SME (Subject Matter Expert) management process, showing both SME self-service updates and partner resource request handling.
+This diagram illustrates the SME (Subject Matter Expert) management process, showing both weekly SME evaluations and partner resource request handling.
 
 ### Key Components:
 
 1. **SME Assignment** - SME is assigned to a project as the starting point
-2. **SME Tracker (Airtable)** - Central database tracking all SME information and activities
-3. **Request Database** - Logs all partner resource requests for tracking and analytics
-4. **Email Notification System** - Automatically notifies SMEs of incoming requests
+2. **SME Tracker (Airtable)** - Automatically updated database tracking all SME activities
+3. **Request Database** - Logs all partner resource requests for tracking
+4. **Automated Email System** - Sends notifications to SMEs for incoming requests
+5. **Analysis Available** - Both workflows conclude with analysis ready for review
 
 ### Two Primary Workflows:
 
-#### SME Self-Service (Blue Path):
-- SME fills out form with updates
-- Information automatically syncs to Airtable SME Tracker
-- Keeps SME information current and accessible
+#### SME Weekly Evaluation (Blue Path):
+- SME completes weekly evaluation form
+- Form data automatically updates SME Tracker in Airtable
+- Analysis becomes available for review and reporting
 
 #### Partner Resource Requests (Orange Path):
 - Partner resource submits request form
-- System sends email notification to assigned SME
+- Priority and request details are captured
+- Automated email is sent to assigned SME
 - Request is logged in database for tracking
-- Creates audit trail of all SME interactions
+- Analysis becomes available for review
 
 ### Benefits:
-- **Centralized tracking** - All SME activities in one place
-- **Automated notifications** - SMEs receive requests immediately
-- **Complete audit trail** - Every request is logged and trackable
-- **Self-service updates** - SMEs can update their own information
+- **Automated tracking** - Weekly evaluations sync automatically to Airtable
+- **Instant notifications** - SMEs receive automated emails immediately
+- **Complete audit trail** - Every request is logged with priority
+- **Analysis ready** - Both paths provide data for analysis and reporting
 ```
