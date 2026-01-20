@@ -5,7 +5,7 @@ flowchart TD
     Start([Start: Partner Onboarding]) --> Form[Fill Out Onboarding Request Form]
 
     Form --> Input1[Select Resource Type:<br/>• Partner<br/>• Resource<br/>• Project]
-    Input1 --> Input2[Enter Details:<br/>• Partner Name<br/>• Project Name<br/>• Resource Name if applicable<br/>• Additional Details]
+    Input1 --> Input2[Enter Details:<br/>• Partner Name<br/>• Project Name<br/>• Resource Name if applicable<br/>• Choose SME Requirement<br/>• Additional Details]
 
     Input2 --> Generate[Click: Generate Checklist]
 
@@ -24,7 +24,12 @@ flowchart TD
     SME --> LinkSME[Link & Assign SMEs<br/>as Applicable]
 
     LinkSME --> Final[Onboarding Checklist Created]
-    Final --> End([Complete])
+    Final --> Notify[Assignees Receive Tasks]
+
+    Notify --> Complete[Assignees Complete Tasks]
+    Complete --> Update[(Automatically Updated<br/>in Airtable)]
+
+    Update --> End([Complete])
 
     style Start fill:#e1f5e1
     style End fill:#e1f5e1
@@ -32,8 +37,11 @@ flowchart TD
     style Generate fill:#ffd700,stroke:#333,stroke-width:3px
     style Template fill:#e1e5f5
     style SME fill:#e1e5f5
+    style Update fill:#e1e5f5
     style Decision fill:#ffe1f5
     style Final fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style Notify fill:#e1f0ff
+    style Complete fill:#fff4e1
 ```
 
 ## Workflow Overview
@@ -50,9 +58,11 @@ This diagram illustrates the partner onboarding process from initial request thr
 
 ### Process Flow:
 
-- User fills out request form with resource type and details
+- User fills out request form with resource type, details, and SME requirements
 - System generates appropriate checklist from template
 - Dates and assignments are automatically populated
 - SMEs are linked from the catalog as needed
-- Final onboarding checklist is ready for use
+- Onboarding checklist is created and assignees receive their tasks
+- Assignees complete their tasks
+- Task completion is automatically updated in Airtable
 ```
