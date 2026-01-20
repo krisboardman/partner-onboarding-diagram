@@ -1,34 +1,29 @@
 # Partner Onboarding Workflow
 
 ```mermaid
-flowchart TD
-    Start([Start: Partner Onboarding]) --> Form[Fill Out Onboarding Request Form]
+flowchart LR
+    Start([Start]) --> Form[Fill Out<br/>Request Form]
+    Form --> Input1[Select Type:<br/>Partner/Resource/Project]
+    Input1 --> Input2[Enter Details &<br/>SME Requirement]
+    Input2 --> Generate[Generate<br/>Checklist]
 
-    Form --> Input1[Select Resource Type:<br/>• Partner<br/>• Resource<br/>• Project]
-    Input1 --> Input2[Enter Details:<br/>• Partner Name<br/>• Project Name<br/>• Resource Name if applicable<br/>• Choose SME Requirement<br/>• Additional Details]
+    Generate --> Template[(Template)]
+    Template --> Decision{Type?}
 
-    Input2 --> Generate[Click: Generate Checklist]
+    Decision -->|Partner| PC[Partner<br/>Checklist]
+    Decision -->|Resource| RC[Resource<br/>Checklist]
+    Decision -->|Project| PrC[Project<br/>Checklist]
 
-    Generate --> Template[(Onboarding Checklist<br/>Template)]
-    Template --> Decision{Resource<br/>Type?}
+    PC --> Assign
+    RC --> Assign
+    PrC --> Assign
 
-    Decision -->|Partner| PartnerChecklist[Generate Partner Checklist]
-    Decision -->|Resource| ResourceChecklist[Generate Resource Checklist]
-    Decision -->|Project| ProjectChecklist[Generate Project Checklist]
-
-    PartnerChecklist --> Assign[Assign Dates &<br/>Assigned To Fields]
-    ResourceChecklist --> Assign
-    ProjectChecklist --> Assign
-
-    Assign --> SME[(SME Role Catalog)]
-    SME --> LinkSME[Link & Assign SMEs<br/>as Applicable]
-
-    LinkSME --> Final[Onboarding Checklist Created]
-    Final --> Notify[Assignees Receive Tasks]
-
-    Notify --> Complete[Assignees Complete Tasks]
-    Complete --> Update[(Automatically Updated<br/>in Airtable)]
-
+    Assign[Assign Dates<br/>& Owners] --> SME[(SME Catalog)]
+    SME --> Link[Link SMEs]
+    Link --> Created[Checklist<br/>Created]
+    Created --> Notify[Assignees<br/>Receive Tasks]
+    Notify --> Complete[Complete<br/>Tasks]
+    Complete --> Update[(Auto Update<br/>Airtable)]
     Update --> End([Complete])
 
     style Start fill:#e1f5e1
@@ -39,7 +34,7 @@ flowchart TD
     style SME fill:#e1e5f5
     style Update fill:#e1e5f5
     style Decision fill:#ffe1f5
-    style Final fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style Created fill:#d4edda,stroke:#28a745,stroke-width:2px
     style Notify fill:#e1f0ff
     style Complete fill:#fff4e1
 ```
